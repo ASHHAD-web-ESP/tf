@@ -104,7 +104,12 @@ function enableCam(event) {
   
   // getUsermedia parameters.
   var constraints = {
-    video: {frameRate: { ideal: 12, max: 15 } , facingMode: (front? "user" : "environment") }
+    video: {width: { 
+     min: 1600,
+    },
+    height: {
+     min: 1200,
+    },frameRate: { ideal: 12, max: 15 } , facingMode: (front? "user" : "environment") }
   };
 
   // Activate the webcam stream.
