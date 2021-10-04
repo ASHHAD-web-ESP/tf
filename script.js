@@ -69,6 +69,7 @@ console.log(predictions);
 
 const video = document.getElementById('webcam');
 const liveView = document.getElementById('liveView');
+const h6 = document.getElementById('h6');
 
 // Check if webcam access is supported.
 function hasGetUserMedia() {
@@ -126,10 +127,12 @@ function predictWebcam() {
     
     // Now lets loop through predictions and draw them to the live view if
     // they have a high confidence score.
+h6.innerHTML=predictions.length +"</br>";
     for (let n = 0; n < predictions.length; n++) {
       // If we are over 66% sure we are sure we classified it right, draw it!
       if (predictions[n].score > 0.66) {
         const p = document.createElement('p');
+h6.innerHTML += predictions[n].class  + '</br>' 
         p.innerText = predictions[n].class  + ' - with ' 
             + Math.round(parseFloat(predictions[n].score) * 100) 
             + '% confidence.';
