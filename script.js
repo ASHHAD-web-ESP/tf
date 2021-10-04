@@ -133,6 +133,7 @@ pc=0;
       if (predictions[n].score > 0.76 && predictions[n].class =="person") {
         const p = document.createElement('p');
 pc++;
+    h6.innerHTML=pc;
         p.innerText = predictions[n].class  + ' - with ' 
             + Math.round(parseFloat(predictions[n].score) * 100) 
             + '% confidence.';
@@ -157,7 +158,6 @@ pc++;
         children.push(p);
       }
     }
-    h6.innerHTML=pc;
 
     // Call this function again to keep predicting when the browser is ready.
     window.requestAnimationFrame(predictWebcam);
