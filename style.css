@@ -30,7 +30,7 @@
 
 body {
   font-family: helvetica, arial, sans-serif;
-  margin: 2em;
+  Padding: 2em;width:100%;box-sizing: border-box;
   color: #3D3D3D;
 }
 ​
@@ -55,7 +55,7 @@ em {
 video {
   clear: both;
   display: block;
-Width:90%;
+Width:100%;
 Margin:auto;
 }
 
