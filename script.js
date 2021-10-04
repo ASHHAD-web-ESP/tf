@@ -34,7 +34,6 @@ function handleClick(event) {
     // Lets write the predictions to a new paragraph element and
     // add it to the DOM.
 console.log(predictions);
-h6.innerHTML=JSON.stringify(predictions)
     for (let n = 0; n < predictions.length; n++) {
       // Description text
       const p = document.createElement('p');
