@@ -1,4 +1,5 @@
 const demosSection = document.getElementById('demos');
+const h6 = document.getElementById('h6');
 
 var model = undefined;
 
@@ -69,7 +70,6 @@ console.log(predictions);
 
 const video = document.getElementById('webcam');
 const liveView = document.getElementById('liveView');
-const h6 = document.getElementById('h6');
 
 // Check if webcam access is supported.
 function hasGetUserMedia() {
