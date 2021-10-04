@@ -105,10 +105,10 @@ function enableCam(event) {
   // getUsermedia parameters.
   var constraints = {
     video: {width: { 
-     min: 1600,
+     max: 1600,
     },
     height: {
-     min: 1200,
+     max: 1200,
     },frameRate: { ideal: 12, max: 15 } , facingMode: (front? "user" : "environment") }
   };
 
@@ -170,4 +170,4 @@ pc++;
   });
 }
 var front = false;
-document.getElementById('flip-button').onclick = function() { front = !front; };
+document.getElementById('flip-button').onclick = function() { front = !front; h6.innerText=front;};
