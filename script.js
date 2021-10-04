@@ -170,4 +170,4 @@ pc++;
   });
 }
 var front = false;
-document.getElementById('flip-button').onclick = function() { front = !front; h6.innerText=front;};
+document.getElementById('flip-button').onclick = function() { front = !front; h6.innerHTML=front;};
