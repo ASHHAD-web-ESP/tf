@@ -1,7 +1,15 @@
-const demosSection = document.getElementById('demos');
-const h6 = document.getElementById('h6');
+const demosSection = document.getElementById('demos'),
+		h6 = document.getElementById('h6'),
+		imageContainers = document.getElementsByClassName('classifyOnClick'),
+		flipButton = document.getElementById('flip-button'),
+		imgHolder = document.getElementById("imgHolder"),
+		imgUrl = document.getElementById("imgUrl"),
+		imgAdder = document.getElementById("imgAdder") ;
 
-var model = undefined , pc=0;
+var model = undefined ,
+	pc=0,
+	front = false;
+
 
 // Before we can use COCO-SSD class we must wait for it to finish
 // loading. Machine Learning models can be large and take a moment to
@@ -11,7 +19,16 @@ cocoSsd.load().then(function (loadedModel) {
   // Show demo section now model is ready to use.
   demosSection.classList.remove('invisible');
 });
-const imageContainers = document.getElementsByClassName('classifyOnClick');
+
+flipButton.onclick = function() { front = !front; h6.innerHTML=front;};
+	
+imgAdder.onclick = function() {
+imgHolder.innerHTML+=`<div class="classifyOnClick">
+				    <img src="${imgUrl.value}" crossorigin="anonymous" />
+					</div>`;
+imgUrl.value="";
+			};
+
 
 // Now let's go through all of these and add a click event listener.
 for (let i = 0; i < imageContainers.length; i++) {
@@ -68,8 +85,8 @@ console.log(predictions);
 // https://tensorflow-js-image-classification.glitch.me/
 ********************************************************************/
 
-const video = document.getElementById('webcam');
-const liveView = document.getElementById('liveView');
+const video = document.getElementById('webcam'),
+		liveView = document.getElementById('liveView');
 
 // Check if webcam access is supported.
 function hasGetUserMedia() {
@@ -100,16 +117,24 @@ function enableCam(event) {
   }
   
   // Hide the button.
-  event.target.classList.add('removed');  
+  event.target.classList.add('removed');
+  flipButton.classList.add('removed');  
   
   // getUsermedia parameters.
   var constraints = {
-    video: {width: { 
-     max: 1600,
-    },
-    height: {
-     max: 1200,
-    },frameRate: { ideal: 12, max: 15 } , facingMode: (front? "user" : "environment") }
+    video: {
+		width: { 
+			min: 1600,
+		},
+		height: {
+			min: 1200,
+		},
+		frameRate: {
+			ideal: 8,
+			max: 12 
+		},
+		facingMode: (front? "user" : "environment")
+	}
   };
 
   // Activate the webcam stream.
@@ -139,7 +164,7 @@ h6.innerHTML=pc;
       if (predictions[n].score > 0.36 && predictions[n].class =="person" ) {
         const p = document.createElement('p');
 pc++;
-    h6.innerHTML=pc;
+h6.innerHTML=pc;
         p.innerText = predictions[n].class  + ' - with ' 
             + Math.round(parseFloat(predictions[n].score) * 100) 
             + '% confidence.';
@@ -169,5 +194,3 @@ pc++;
     window.requestAnimationFrame(predictWebcam);
   });
 }
-var front = false;
-document.getElementById('flip-button').onclick = function() { front = !front; h6.innerHTML=front;};
