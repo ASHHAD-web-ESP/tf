@@ -27,6 +27,7 @@ imgHolder.innerHTML+=`<div class="classifyOnClick">
 				    <img src="${imgUrl.value}" crossorigin="anonymous" />
 					</div>`;
 imgUrl.value="";
+document.querySelector(".classifyOnClick:last-child img").addEventListener('click', handleClick);
 			};
 
 
