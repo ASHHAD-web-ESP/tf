@@ -1,6 +1,6 @@
 const demosSection = document.getElementById('demos');
-const pc=0,h6 = document.getElementById('h6');
-
+const h6 = document.getElementById('h6');
+let pc=0;
 var model = undefined;
 
 // Before we can use COCO-SSD class we must wait for it to finish
