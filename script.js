@@ -1,7 +1,7 @@
 const demosSection = document.getElementById('demos');
 const h6 = document.getElementById('h6');
-let pc=0;
-var model = undefined;
+
+var model = undefined , pc=0;
 
 // Before we can use COCO-SSD class we must wait for it to finish
 // loading. Machine Learning models can be large and take a moment to
