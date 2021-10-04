@@ -130,7 +130,7 @@ function predictWebcam() {
 h6.innerHTML=predictions.length +"</br>";
     for (let n = 0; n < predictions.length; n++) {
       // If we are over 66% sure we are sure we classified it right, draw it!
-      if (predictions[n].score > 0.66) {
+      if (predictions[n].score > 0.76 && predictions[n].class =="person") {
         const p = document.createElement('p');
 h6.innerHTML += predictions[n].class  + '</br>' 
         p.innerText = predictions[n].class  + ' - with ' 
