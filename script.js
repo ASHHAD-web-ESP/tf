@@ -1,5 +1,5 @@
 const demosSection = document.getElementById('demos');
-const h6 = document.getElementById('h6');
+const pc=0,h6 = document.getElementById('h6');
 
 var model = undefined;
 
@@ -127,12 +127,12 @@ function predictWebcam() {
     
     // Now lets loop through predictions and draw them to the live view if
     // they have a high confidence score.
-h6.innerHTML=predictions.length +"</br>";
+pc=0;
     for (let n = 0; n < predictions.length; n++) {
       // If we are over 66% sure we are sure we classified it right, draw it!
       if (predictions[n].score > 0.76 && predictions[n].class =="person") {
         const p = document.createElement('p');
-h6.innerHTML += predictions[n].class  + '</br>' 
+pc++;
         p.innerText = predictions[n].class  + ' - with ' 
             + Math.round(parseFloat(predictions[n].score) * 100) 
             + '% confidence.';
@@ -157,7 +157,8 @@ h6.innerHTML += predictions[n].class  + '</br>'
         children.push(p);
       }
     }
-    
+    h6.innerHTML=pc;
+
     // Call this function again to keep predicting when the browser is ready.
     window.requestAnimationFrame(predictWebcam);
   });
