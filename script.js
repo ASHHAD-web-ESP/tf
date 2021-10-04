@@ -34,6 +34,7 @@ function handleClick(event) {
     // Lets write the predictions to a new paragraph element and
     // add it to the DOM.
 console.log(predictions);
+document.write(predictions)
     for (let n = 0; n < predictions.length; n++) {
       // Description text
       const p = document.createElement('p');
@@ -104,7 +105,7 @@ function enableCam(event) {
   
   // getUsermedia parameters.
   var constraints = {
-    video: {frameRate: { ideal: 15, max: 18 } , facingMode: (front? "user" : "environment") }
+    video: {frameRate: { ideal: 12, max: 15 } , facingMode: (front? "user" : "environment") }
   };
 
   // Activate the webcam stream.
@@ -131,7 +132,7 @@ pc=0;
 h6.innerHTML=pc;
     for (let n = 0; n < predictions.length; n++) {
       // If we are over 66% sure we are sure we classified it right, draw it!
-      if (predictions[n].score > 0.36 && ( predictions[n].class =="person" || true )) {
+      if (predictions[n].score > 0.36 && predictions[n].class =="person" ) {
         const p = document.createElement('p');
 pc++;
     h6.innerHTML=pc;
