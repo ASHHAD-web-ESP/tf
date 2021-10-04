@@ -102,8 +102,8 @@ function enableCam(event) {
   event.target.classList.add('removed');  
   
   // getUsermedia parameters.
-  const constraints = {
-    video: true
+  var constraints = {
+    video: {facingMode: (front? "user" : "environment") }
   };
 
   // Activate the webcam stream.
@@ -159,3 +159,5 @@ function predictWebcam() {
     window.requestAnimationFrame(predictWebcam);
   });
 }
+var front = false;
+document.getElementById('flip-button').onclick = function() { front = !front; };
