@@ -72,11 +72,11 @@ header, footer {
 
 .invisible {
   opacity: 0.2;
+animation: inv 1s infinite;
 }
 
-.note {
-  font-style: italic;
-  font-size: 130%;
+@keyframes inv {
+  50% {opacity: 0.4;}
 }
 
 .videoView, .classifyOnClick {
