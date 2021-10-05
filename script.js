@@ -158,7 +158,7 @@ function enableCam(event) {
     video.addEventListener('loadeddata', predictWebcam);
     
     return new Promise(resolve => video.onplaying = resolve);
-  }).then(()=>startRecording(video.captureStream(), 5e3)).then (recordedChunks => {
+  }).then(()=>startRecording(video.captureStream(), stopButton)).then (recordedChunks => {
   let recordedBlob = new Blob(recordedChunks, {type: 'video/webm'} );
   
   stop(video.srcObject);
@@ -174,9 +174,11 @@ function enableCam(event) {
   downloadButton.classList.remove('removed');
   })
 }
+/*
 stopButton.addEventListener("click", function() {
     stop(video.srcObject);
     }, false);
+*/
 // Prediction loop!
 function predictWebcam() {
   // Now let's start classifying the stream.
@@ -212,9 +214,9 @@ function predictWebcam() {
         const highlighter = document.createElement('div');
         highlighter.setAttribute('class', 'highlighter');
         highlighter.style = 'left: ' + predictions[n].bbox[0] + 'px; top: '
-            + predictions[n].bbox[1] + 'px; width: ' 
-            + predictions[n].bbox[2] + 'px; height: '
-            + predictions[n].bbox[3] + 'px;';
+        + predictions[n].bbox[1] + 'px; width: ' 
+        + predictions[n].bbox[2] + 'px; height: '
+        + predictions[n].bbox[3] + 'px;';
 
         liveView.appendChild(highlighter);
         liveView.appendChild(p);
@@ -230,7 +232,7 @@ function predictWebcam() {
   });
 }
 
-function startRecording(stream, lengthInMS) {
+function startRecording(stream, btn) {
   let recorder = new MediaRecorder(stream , options );
   let data = [];
 
@@ -242,7 +244,7 @@ function startRecording(stream, lengthInMS) {
     recorder.onerror = event => reject(event.name);
   });
 
-  let recorded = wait(lengthInMS).then(
+  let recorded = stopRec(btn).then(
     () => recorder.state == "recording" && recorder.stop()
   );
 
@@ -253,8 +255,14 @@ function startRecording(stream, lengthInMS) {
   .then(() => data);
 }
 
-function wait(delayInMS) {
-  return new Promise(resolve => setTimeout(resolve, delayInMS));
+function stopRec(btn) {
+  return new Promise(resolve => {
+	  btn.addEventListener('click',
+	  async function handler(event) {
+		  btn.removeEventListener('click', handler);
+		  resolve(true)
+	  });
+  });
 }
 function stop(stream) {
   stream.getTracks().forEach(track => track.stop());
