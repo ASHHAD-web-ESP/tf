@@ -152,11 +152,7 @@ function enableCam(event) {
     video.captureStream = video.captureStream || video.mozCaptureStream;
     video.addEventListener('loadeddata', predictWebcam);
     
-    stopButton.addEventListener("click", function() {
-    stop(video.srcObject);
-    }, false);
-    
-    return new Promise(resolve => preview.onplaying = resolve);
+    return new Promise(resolve => video.onplaying = resolve);
   }).then(()=>startRecording(video.captureStream(), 1500)).then (recordedChunks => {
   let recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
   downloadButton.href = recording.src;
@@ -164,7 +160,9 @@ function enableCam(event) {
   downloadButton.classList.remove('removed');
   })
 }
-
+stopButton.addEventListener("click", function() {
+    stop(video.srcObject);
+    }, false);
 
 // Prediction loop!
 function predictWebcam() {
