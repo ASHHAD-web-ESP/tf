@@ -4,8 +4,10 @@ const demosSection = document.getElementById('demos'),
 		flipButton = document.getElementById('flip-button'),
 		imgHolder = document.getElementById("imgHolder"),
 		imgUrl = document.getElementById("imgUrl"),
-		imgAdder = document.getElementById("imgAdder") ;
-
+		imgAdder = document.getElementById("imgAdder"),
+		downloadButton = document.getElementById("downloadButton");
+		
+		
 var model = undefined ,
 	pc=0,
 	front = false;
@@ -20,7 +22,9 @@ cocoSsd.load().then(function (loadedModel) {
   demosSection.classList.remove('invisible');
 });
 
+
 flipButton.onclick = function() { front = !front; h6.innerHTML=front;};
+	
 	
 imgAdder.onclick = function() {
 imgHolder.innerHTML+=`<div class="classifyOnClick">
@@ -28,7 +32,7 @@ imgHolder.innerHTML+=`<div class="classifyOnClick">
 					</div>`;
 imgUrl.value="";
 document.querySelector(".classifyOnClick:last-child img").addEventListener('click', handleClick);
-			};
+};
 
 
 // Now let's go through all of these and add a click event listener.
@@ -85,9 +89,9 @@ event.target.parentNode.appendChild(pre);
 
 /********************************************************************
 // Demo 2: Continuously grab image from webcam stream and classify it.
-// Note: You must access the demo on https for this to work:
-// https://tensorflow-js-image-classification.glitch.me/
 ********************************************************************/
+
+
 
 const video = document.getElementById('webcam'),
 		liveView = document.getElementById('liveView');
@@ -144,8 +148,17 @@ function enableCam(event) {
   // Activate the webcam stream.
   navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
     video.srcObject = stream;
+    video.captureStream = video.captureStream || video.mozCaptureStream;
     video.addEventListener('loadeddata', predictWebcam);
-  });
+    return new Promise(resolve => preview.onplaying = resolve);
+  }).then(()=>
+  startRecording(video.captureStream(), 2050)
+  ).then (recordedChunks => {
+  let recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
+  downloadButton.href = recording.src;
+  downloadButton.download = "RecordedVideo.webm";
+  downloadButton.className="";
+  })
 }
 
 
@@ -161,14 +174,17 @@ function predictWebcam() {
     
     // Now lets loop through predictions and draw them to the live view if
     // they have a high confidence score.
-pc=0;
-h6.innerHTML=pc;
+	pc=0;
+	h6.innerHTML=pc;
+
     for (let n = 0; n < predictions.length; n++) {
       // If we are over 66% sure we are sure we classified it right, draw it!
       if (predictions[n].score > 0.36 && predictions[n].class =="person" ) {
         const p = document.createElement('p');
-pc++;
-h6.innerHTML=pc;
+		
+		pc++;
+		h6.innerHTML=pc;
+
         p.innerText = predictions[n].class  + ' - with ' 
             + Math.round(parseFloat(predictions[n].score) * 100) 
             + '% confidence.';
@@ -197,4 +213,33 @@ h6.innerHTML=pc;
     // Call this function again to keep predicting when the browser is ready.
     window.requestAnimationFrame(predictWebcam);
   });
+}
+
+function startRecording(stream, lengthInMS) {
+  let recorder = new MediaRecorder(stream);
+  let data = [];
+
+  recorder.ondataavailable = event => data.push(event.data);
+  recorder.start();
+  
+  let stopped = new Promise((resolve, reject) => {
+    recorder.onstop = resolve;
+    recorder.onerror = event => reject(event.name);
+  });
+
+  let recorded = wait(lengthInMS).then(
+    () => recorder.state == "recording" && recorder.stop()
+  );
+
+  return Promise.all([
+    stopped,
+    recorded
+  ])
+  .then(() => data);
+}
+function wait(delayInMS) {
+  return new Promise(resolve => setTimeout(resolve, delayInMS));
+}
+function stop(stream) {
+  stream.getTracks().forEach(track => track.stop());
 }
