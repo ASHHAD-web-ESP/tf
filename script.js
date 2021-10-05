@@ -166,7 +166,7 @@ function enableCam(event) {
   video.src = URL.createObjectURL(recordedBlob);
   
   downloadButton.href = video.src;
-  downloadButton.download = Date.now()".webm";
+  downloadButton.download = Date.now().toString(36)+".webm";
   
   stopButton.classList.add('removed');
   downloadButton.classList.remove('removed');
