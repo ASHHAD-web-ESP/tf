@@ -51,12 +51,11 @@ function handleClick(event) {
   model.detect(event.target).then(function (predictions) {
     // Lets write the predictions to a new paragraph element and
     // add it to the DOM.
-console.log(predictions);
-const pre = document.createElement('pre');
-pre.innerText = predictions ;
-alert(predictions);
-event.target.parentNode.appendChild(pre);
+console.log(predictions)
     for (let n = 0; n < predictions.length; n++) {
+const pre = document.createElement('pre');
+pre.innerText = JSON.stringify( predictions[n] );
+event.target.parentNode.appendChild(pre);
       // Description text
       const p = document.createElement('p');
       p.innerText = predictions[n].class  + ' - with ' 
