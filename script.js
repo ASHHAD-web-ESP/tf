@@ -1,3 +1,4 @@
+
 const demosSection = document.getElementById('demos'),
 		h6 = document.getElementById('h6'),
 		imageContainers = document.getElementsByClassName('classifyOnClick'),
@@ -117,7 +118,12 @@ if (hasGetUserMedia()) {
   console.warn('getUserMedia() is not supported by your browser');
 }
 
-
+var options;
+if (MediaRecorder.isTypeSupported('video/webm;codecs=vp9')) {
+  options = {mimeType: 'video/webm; codecs=vp9'};
+} else if (MediaRecorder.isTypeSupported('video/webm;codecs=vp8')) {
+   options = {mimeType: 'video/webm; codecs=vp8'};
+} 
 // Enable the live webcam view and start classification.
 function enableCam(event) {
   if (!model) {
@@ -153,10 +159,12 @@ function enableCam(event) {
     video.addEventListener('loadeddata', predictWebcam);
     
     return new Promise(resolve => video.onplaying = resolve);
-  }).then(()=>startRecording(video.captureStream(), 1500)).then (recordedChunks => {
-  let recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
+  }).then(()=>startRecording(video.captureStream(), 1e4)).then (recordedChunks => {
+  let recordedBlob = new Blob(recordedChunks, {type: 'video/webm'} );
   downloadButton.href = URL.createObjectURL(recordedBlob);
   downloadButton.download = "RecordedVideo.webm";
+  stop(video.srcObject);
+  video.src=downloadButton.href;
   downloadButton.classList.remove('removed');
   })
 }
@@ -218,7 +226,7 @@ function predictWebcam() {
 }
 
 function startRecording(stream, lengthInMS) {
-  let recorder = new MediaRecorder(stream);
+  let recorder = new MediaRecorder(stream , options );
   let data = [];
 
   recorder.ondataavailable = event => data.push(event.data);
