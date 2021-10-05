@@ -151,13 +151,11 @@ function enableCam(event) {
     video.captureStream = video.captureStream || video.mozCaptureStream;
     video.addEventListener('loadeddata', predictWebcam);
     return new Promise(resolve => preview.onplaying = resolve);
-  }).then(()=>
-  startRecording(video.captureStream(), 2050)
-  ).then (recordedChunks => {
+  }).then(()=>startRecording(video.captureStream(), 1500)).then (recordedChunks => {
   let recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
   downloadButton.href = recording.src;
   downloadButton.download = "RecordedVideo.webm";
-  downloadButton.className="";
+  downloadButton.classList.remove('removed');
   })
 }
 
