@@ -128,10 +128,10 @@ function enableCam(event) {
   var constraints = {
     video: {
 		width: { 
-			min: 1600,
+			exact: 400,
 		},
 		height: {
-			min: 1200,
+			exact: 300,
 		},
 		frameRate: {
 			ideal: 8,
