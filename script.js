@@ -13,7 +13,6 @@ var model = undefined ,
 	pc=0,
 	front = false;
 
-
 // Before we can use COCO-SSD class we must wait for it to finish
 // loading. Machine Learning models can be large and take a moment to
 // get everything needed to run.
@@ -24,7 +23,7 @@ cocoSsd.load().then(function (loadedModel) {
 });
 
 
-flipButton.onclick = function() { front = !front; h6.innerHTML=front;};
+flipButton.onclick = function() { front = !front; h6.innerHTML=front?"front":"back";};
 	
 	
 imgAdder.onclick = function() {
