@@ -53,7 +53,8 @@ function handleClick(event) {
     // add it to the DOM.
 console.log(predictions);
 const pre = document.createElement('pre');
-pre.innerHTML = predictions ;
+pre.innerText = predictions ;
+alert(predictions);
 event.target.parentNode.appendChild(pre);
     for (let n = 0; n < predictions.length; n++) {
       // Description text
