@@ -155,7 +155,7 @@ function enableCam(event) {
     return new Promise(resolve => video.onplaying = resolve);
   }).then(()=>startRecording(video.captureStream(), 1500)).then (recordedChunks => {
   let recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
-  downloadButton.href = recording.src;
+  downloadButton.href = URL.createObjectURL(recordedBlob);
   downloadButton.download = "RecordedVideo.webm";
   downloadButton.classList.remove('removed');
   })
