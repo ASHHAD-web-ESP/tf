@@ -1,4 +1,3 @@
-
 const demosSection = document.getElementById('demos'),
 		h6 = document.getElementById('h6'),
 		imageContainers = document.getElementsByClassName('classifyOnClick'),
@@ -159,19 +158,19 @@ function enableCam(event) {
     video.addEventListener('loadeddata', predictWebcam);
     
     return new Promise(resolve => video.onplaying = resolve);
-  }).then(()=>startRecording(video.captureStream(), 1e4)).then (recordedChunks => {
+  }).then(()=>startRecording(video.captureStream(), 5e3)).then (recordedChunks => {
   let recordedBlob = new Blob(recordedChunks, {type: 'video/webm'} );
-  downloadButton.href = URL.createObjectURL(recordedBlob);
-  downloadButton.download = "RecordedVideo.webm";
   stop(video.srcObject);
-  video.src=downloadButton.href;
+  video.srcObject = URL.createObjectURL(recordedBlob);
+  downloadButton.href = video.srcObject
+  downloadButton.download = "RecordedVideo.webm";
+  stopButton.classList.add('removed');
   downloadButton.classList.remove('removed');
   })
 }
 stopButton.addEventListener("click", function() {
     stop(video.srcObject);
     }, false);
-
 // Prediction loop!
 function predictWebcam() {
   // Now let's start classifying the stream.
