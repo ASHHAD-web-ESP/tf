@@ -5,6 +5,7 @@ const demosSection = document.getElementById('demos'),
 		imgHolder = document.getElementById("imgHolder"),
 		imgUrl = document.getElementById("imgUrl"),
 		imgAdder = document.getElementById("imgAdder"),
+		stopButton = document.getElementById("stopButton"),
 		downloadButton = document.getElementById("downloadButton");
 		
 		
@@ -150,6 +151,11 @@ function enableCam(event) {
     video.srcObject = stream;
     video.captureStream = video.captureStream || video.mozCaptureStream;
     video.addEventListener('loadeddata', predictWebcam);
+    
+    stopButton.addEventListener("click", function() {
+    stop(video.srcObject);
+    }, false);
+    
     return new Promise(resolve => preview.onplaying = resolve);
   }).then(()=>startRecording(video.captureStream(), 1500)).then (recordedChunks => {
   let recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
@@ -235,12 +241,14 @@ function startRecording(stream, lengthInMS) {
   ])
   .then(() => data);
 }
+
 function wait(delayInMS) {
   return new Promise(resolve => setTimeout(resolve, delayInMS));
 }
 function stop(stream) {
   stream.getTracks().forEach(track => track.stop());
 }
+
 window.onerror = function(msg, url, linenumber) {
     alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
     return true;
