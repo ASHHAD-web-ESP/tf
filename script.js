@@ -52,6 +52,9 @@ function handleClick(event) {
     // Lets write the predictions to a new paragraph element and
     // add it to the DOM.
 console.log(predictions);
+const pre = document.createElement('pre');
+pre.innerHTML = predictions ;
+event.target.parentNode.appendChild(pre);
     for (let n = 0; n < predictions.length; n++) {
       // Description text
       const p = document.createElement('p');
