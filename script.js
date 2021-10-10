@@ -8,14 +8,14 @@ const demosSection = document.getElementById('demos'),
 		stopButton = document.getElementById("stopButton"),
 		downloadButton = document.getElementById("downloadButton");
 		
-		alert(tf.getBackend())
 var model = undefined ,
 	pc=0,
 	front = false;
 // Set the backend to WASM and wait for the module to be ready.
-tf.setBackend('wasm');
+tf.setBackend('webgl');
 tf.ready().then(() => {
 
+alert(tf.getBackend())
 
 // Before we can use COCO-SSD class we must wait for it to finish
 // loading. Machine Learning models can be large and take a moment to
