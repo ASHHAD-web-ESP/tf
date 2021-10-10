@@ -15,7 +15,6 @@ var model = undefined ,
 tf.setBackend('webgl');
 tf.ready().then(() => {
 
-alert(tf.getBackend())
 
 // Before we can use COCO-SSD class we must wait for it to finish
 // loading. Machine Learning models can be large and take a moment to
