@@ -8,7 +8,7 @@ const demosSection = document.getElementById('demos'),
 		stopButton = document.getElementById("stopButton"),
 		downloadButton = document.getElementById("downloadButton");
 		
-		
+		alert(tf.getBackend())
 var model = undefined ,
 	pc=0,
 	front = false;
