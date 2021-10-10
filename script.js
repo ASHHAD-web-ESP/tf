@@ -12,6 +12,10 @@ const demosSection = document.getElementById('demos'),
 var model = undefined ,
 	pc=0,
 	front = false;
+// Set the backend to WASM and wait for the module to be ready.
+tf.setBackend('wasm');
+tf.ready().then(() => {
+
 
 // Before we can use COCO-SSD class we must wait for it to finish
 // loading. Machine Learning models can be large and take a moment to
@@ -22,6 +26,7 @@ cocoSsd.load().then(function (loadedModel) {
   demosSection.classList.remove('invisible');
 });
 
+});
 
 flipButton.onclick = function() { front = !front; h6.innerHTML=front?"front":"back";};
 	
