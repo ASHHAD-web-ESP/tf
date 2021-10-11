@@ -56,7 +56,7 @@ function handleClick(event) {
   // different image data each time. This returns a promise
   // which we wait to complete and then call a function to
   // print out the results of the prediction.
-  model.detect(event.target).then(function (predictions) {
+  model.detect(event.target ,40 , .2 ).then(function (predictions) {
     // Lets write the predictions to a new paragraph element and
     // add it to the DOM.
 console.log(predictions)
