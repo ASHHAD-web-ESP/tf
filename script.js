@@ -56,7 +56,7 @@ function handleClick(event) {
   // different image data each time. This returns a promise
   // which we wait to complete and then call a function to
   // print out the results of the prediction.
-  model.detect(event.target ,20 , .02 ).then(function (predictions) {
+  model.detect(event.target).then(function (predictions) {
     // Lets write the predictions to a new paragraph element and
     // add it to the DOM.
 console.log(predictions)
@@ -185,7 +185,7 @@ stopButton.addEventListener("click", function() {
 // Prediction loop!
 function predictWebcam() {
   // Now let's start classifying the stream.
-  model.detect(video).then(function (predictions) {
+  model.detect(video ,15,.2 ).then(function (predictions) {
     // Remove any highlighting we did previous frame.
     for (let i = 0; i < children.length; i++) {
       liveView.removeChild(children[i]);
