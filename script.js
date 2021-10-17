@@ -171,7 +171,6 @@ function enableCam(event) {
   video.setAttribute("controls","");
   
   downloadButton.href = video.src;
-downloadButton.href = URL.createObjectURL(recordedChunks)
   downloadButton.download = Date.now().toString(36)+".webm";
   
   stopButton.classList.add('removed');
