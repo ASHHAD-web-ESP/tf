@@ -167,10 +167,11 @@ function enableCam(event) {
   stop(video.srcObject);
   video.srcObject=null;
   video.removeEventListener('loadeddata', predictWebcam);
-  video.src = URL.createObjectURL(recordedChunks);
+  video.src = URL.createObjectURL(recordedBlob);
   video.setAttribute("controls","");
   
   downloadButton.href = video.src;
+downloadButton.href = URL.createObjectURL(recordedChunks)
   downloadButton.download = Date.now().toString(36)+".webm";
   
   stopButton.classList.add('removed');
