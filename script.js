@@ -239,7 +239,10 @@ function startRecording(stream, btn) {
   let recorder = new MediaRecorder(stream , options );
   let data = [];
 
-  recorder.ondataavailable = event => data.push(event.data);
+  recorder.ondataavailable = event => {
+data.push(event.data);
+alert(event.data)
+}
   recorder.start();
   
   let stopped = new Promise((resolve, reject) => {
